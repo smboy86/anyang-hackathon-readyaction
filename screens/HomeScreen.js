@@ -219,7 +219,7 @@ const HomeScreen = ({ navigation }) => {
           // onChangeText={text => onChangeSearchText(text)}
           // value={}
         ></SearchTextInput>
-        <SearchIconBox onPress={() => this._moveFilter}>
+        <SearchIconBox onPress={() => {}}>
           <Ionicons name="md-search" size={26} color="black" />
         </SearchIconBox>
       </InputBox>
@@ -240,8 +240,11 @@ HomeScreen.navigationOptions = {
   // header: null
   title: "레디액션",
   headerRight: (
-    <View style={{ paddingRight: 10 }}>
+    <TouchableOpacity
+      style={{ paddingRight: 10 }}
+      onPress={() => this._moveFilter()}
+    >
       <AntDesign name="filter" size={24} color="black" />
-    </View>
+    </TouchableOpacity>
   )
 };

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import {
   Image,
   Platform,
@@ -11,95 +11,57 @@ import {
   Alert
 } from "react-native";
 
-import { List, ListItem, Card } from "react-native-elements";
+import {
+  List,
+  ListItem,
+  Card,
+  Slider,
+  ButtonGroup,
+  Button
+} from "react-native-elements";
 import { AntDesign, Ionicons, FontAwesome } from "@expo/vector-icons";
 import styled from "styled-components";
 
-import Swiper from "react-native-swiper";
-import { Video } from "expo-av";
-
-import { Slider, ButtonGroup, Button } from "react-native-elements";
-
-const { width } = Dimensions.get("window");
-
-const testImg = [
-  "../assets/video/test.mp4",
-  "https://d26oc3sg82pgk3.cloudfront.net/files/media/uploads/casting_call/a7dbe5cf-1c18-4252-92b5-cc70562c4864-bWFpbi1uLW4tMC0wLTAtOTYxLTEyMDA.jpg",
-  "https://d26oc3sg82pgk3.cloudfront.net/files/media/uploads/casting_call/e17d3124-f660-45d1-9921-1faabfc7d702.jpg",
-  "https://d26oc3sg82pgk3.cloudfront.net/files/media/uploads/casting_call/54e88f08-48d8-4913-aa0a-ca23f3dc9d51.jpg",
-  "https://d26oc3sg82pgk3.cloudfront.net/files/media/uploads/casting_call/5c0dfe99-0613-4563-a9c8-10255deb638a.jpg"
-];
-
-const buttons = ["", "", ""];
-
-const SwiperItem = styled.View`
-  flex: 1;
-  justify-content: center;
-  align-items: center;
-  padding: 10px;
-  background-color: #000;
-`;
-
-const ContainerScrollView = styled.ScrollView`
-  flex: 1;
-`;
-
-const Container = styled.View`
-  flex: 1;
-  padding: 10px;
-`;
-
-const SubTitle = styled.Text`
-  font-size: 18px;
-  font-weight: 700;
-  margin: 10px 0 10px 0;
-`;
-
-const SubInfoBox = styled.View`
-  padding: 10px;
-`;
-
-const SubInfoText = styled.Text`
-  font-size: 14px;
-`;
-
-const AbilityBox = styled.View`
-  flex-direction: row;
-`;
-
-const AbilityLeftBox = styled.View`
-  width: 25%;
-`;
-
-const AbilityRightBox = styled.View`
-  width: 75%;
-`;
-
-const RoleBox = styled.View`
-  flex-direction: row;
-  flex-wrap: wrap;
-`;
-
-const RoleTextBox = styled.View`
-  width: 32%;
-  margin-right: 4px;
-  margin-bottom: 4px;
-  border: 1px solid ${props => (props.color == "yes" ? "#A9F5BC" : "#e6e6e6")};
-  background-color: ${props => (props.color == "yes" ? "#A9F5BC" : "#fff")};
-`;
-
-const RoleText = styled.Text`
-  padding: 10px 12px;
-`;
-
-const BtnGroup = styled.View`
-  padding-top: 20px;
-  padding-bottom: 60px;
-`;
+import MultiSlider from "react-native-multi-slider";
 
 export default function FilterScreen() {
   state = {
-    refreshing: false
+    sliderOneChanging: false,
+    sliderOneValue: [5],
+    multiSliderValue: [3, 7],
+    nonCollidingMultiSliderValue: [0, 100]
+  };
+
+  sliderOneValuesChangeStart = () => {
+    this.setState({
+      sliderOneChanging: true
+    });
+  };
+
+  sliderOneValuesChange = values => {
+    let newValues = [0];
+    newValues[0] = values[0];
+    this.setState({
+      sliderOneValue: newValues
+    });
+  };
+
+  sliderOneValuesChangeFinish = () => {
+    this.setState({
+      sliderOneChanging: false
+    });
+  };
+
+  multiSliderValuesChange = values => {
+    this.setState({
+      multiSliderValue: values
+    });
+  };
+
+  nonCollidingMultiSliderValuesChange = values => {
+    this.setState({
+      nonCollidingMultiSliderValue: values
+    });
   };
 
   _showAlert = text => {
@@ -116,203 +78,128 @@ export default function FilterScreen() {
   };
 
   return (
-    <ContainerScrollView>
-      <Swiper style={styles.wrapper} height={400} horizontal={false}>
-        {/* <SwiperItem>
-          <Video
-            source={{
-              uri: "http://docker.devpoi.com/test.mp4"
-            }}
-            usePoster={true}
-            rate={1.0}
-            volume={1.0}
-            isMuted={false}
-            resizeMode="contain"
-            useNativeControls
-            isLooping
-            style={{ width: width, height: 400 }}
+    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+      <View style={styles.container}>
+        <Text style={styles.title}>Sliders</Text>
+        <View style={styles.sliders}>
+          <View style={styles.sliderOne}>
+            <Text style={styles.text}>One Marker with callback example:</Text>
+            <Text
+              style={[
+                styles.text,
+                this.state.sliderOneChanging && { color: "red" }
+              ]}
+            >
+              {this.state.sliderOneValue}
+            </Text>
+          </View>
+          <MultiSlider
+            values={this.state.sliderOneValue}
+            sliderLength={280}
+            onValuesChangeStart={this.sliderOneValuesChangeStart}
+            onValuesChange={this.sliderOneValuesChange}
+            onValuesChangeFinish={this.sliderOneValuesChangeFinish}
           />
-        </SwiperItem> */}
-        <SwiperItem>
-          <Image
-            style={{ width: width, height: 400 }}
-            source={{ uri: testImg[1] }}
+          <View style={styles.sliderOne}>
+            <Text style={styles.text}>Two Markers:</Text>
+            <Text style={styles.text}>{this.state.multiSliderValue[0]} </Text>
+            <Text style={styles.text}>{this.state.multiSliderValue[1]}</Text>
+          </View>
+          <MultiSlider
+            values={[
+              this.state.multiSliderValue[0],
+              this.state.multiSliderValue[1]
+            ]}
+            sliderLength={280}
+            onValuesChange={this.multiSliderValuesChange}
+            min={0}
+            max={10}
+            step={1}
+            allowOverlap
+            snapped
           />
-        </SwiperItem>
-        <SwiperItem>
-          <Image
-            style={{ width: width, height: 400 }}
-            source={{ uri: testImg[2] }}
-          />
-        </SwiperItem>
-        <SwiperItem>
-          <Image
-            style={{ width: width, height: 400 }}
-            source={{ uri: testImg[3] }}
-          />
-        </SwiperItem>
-      </Swiper>
-      <Container>
-        <SubTitle>모습</SubTitle>
-        <SubInfoBox>
-          <SubInfoText>성별 : 여</SubInfoText>
-          <SubInfoText>나이 : 24-33 </SubInfoText>
-          <SubInfoText>키 : 160cm </SubInfoText>
-          <SubInfoText>몸무게 : 57kg </SubInfoText>
-          <SubInfoText>체형 : 슬림 </SubInfoText>
-          <SubInfoText>헤어 : 애쉬컬러 염색</SubInfoText>
-        </SubInfoBox>
-        <SubTitle>능력</SubTitle>
-        <AbilityBox>
-          <AbilityLeftBox>
-            <SubInfoText style={{ paddingTop: 4 }}>한국어</SubInfoText>
-            <SubInfoText style={{ paddingTop: 14 }}>액션스킬</SubInfoText>
-            <SubInfoText style={{ paddingTop: 16 }}>요가</SubInfoText>
-            <SubInfoText style={{ paddingTop: 18 }}>노래</SubInfoText>
-          </AbilityLeftBox>
-          <AbilityRightBox>
-            <ButtonGroup
-              disabled
-              selectedIndex={0}
-              buttons={buttons}
-              containerStyle={{ height: 26 }}
-              buttonStyle={{ backgroundColor: "#e2e2e2" }}
-            />
-            <ButtonGroup
-              disabled
-              selectedIndex={1}
-              buttons={buttons}
-              containerStyle={{ height: 26 }}
-              buttonStyle={{ backgroundColor: "#e2e2e2" }}
-            />
-            <ButtonGroup
-              disabled
-              selectedIndex={2}
-              buttons={buttons}
-              containerStyle={{ height: 26 }}
-              buttonStyle={{ backgroundColor: "#e2e2e2" }}
-            />
-            <ButtonGroup
-              disabled
-              selectedIndex={0}
-              buttons={buttons}
-              containerStyle={{ height: 26 }}
-              buttonStyle={{ backgroundColor: "#e2e2e2" }}
-            />
-          </AbilityRightBox>
-        </AbilityBox>
-        <SubTitle>역할</SubTitle>
-        <RoleBox>
-          <RoleTextBox color="yes">
-            <RoleText>보조출연자</RoleText>
-          </RoleTextBox>
-          <RoleTextBox color="yes">
-            <RoleText>촬영스탭</RoleText>
-          </RoleTextBox>
-          <RoleTextBox color="">
-            <RoleText>CF모델</RoleText>
-          </RoleTextBox>
-          <RoleTextBox color="">
-            <RoleText>주연배우</RoleText>
-          </RoleTextBox>
-          <RoleTextBox color="">
-            <RoleText>조연배우</RoleText>
-          </RoleTextBox>
-          <RoleTextBox color="">
-            <RoleText>영화배우</RoleText>
-          </RoleTextBox>
-        </RoleBox>
-        <SubTitle>경력</SubTitle>
-        <View>
-          <Text>
-            <Text numberOfLines={1} style={{ color: "#F78181" }}>
-              하얀 거탑
-            </Text>{" "}
-            - 권순일 역 [TV 드라마] 2007.01 ~ 2007.03
+        </View>
+        <View style={styles.sliderOne}>
+          <Text style={styles.text}>
+            Two Markers with minimum overlap distance:
+          </Text>
+          <Text style={styles.text}>
+            {this.state.nonCollidingMultiSliderValue[0]}{" "}
+          </Text>
+          <Text style={styles.text}>
+            {this.state.nonCollidingMultiSliderValue[1]}
           </Text>
         </View>
-        <View>
-          <Text>
-            <Text numberOfLines={1} style={{ color: "#F78181" }}>
-              이 산
-            </Text>{" "}
-            - 정조 내시 역 [TV 드라마] 2007.09 ~ 2008.06
-          </Text>
-        </View>
-        <BtnGroup>
-          <Button
-            icon={
-              <FontAwesome
-                name="handshake-o"
-                size={15}
-                color="#BCA9F5"
-                style={{ paddingLeft: 4, marginTop: 6 }}
-              />
-            }
-            iconRight
-            title="출연 제의하기"
-            onPress={() => this._showAlert("출연 제의하기")}
-            buttonStyle={{ backgroundColor: "#FFF" }}
-            titleStyle={{ color: "#BCA9F5" }}
-            buttonStyle={{
-              backgroundColor: "transparent",
-              borderWidth: 1,
-              borderColor: "#BCA9F5",
-              borderRadius: 10
-            }}
-            containerStyle={{ marginVertical: 10 }}
-          />
-          <Button
-            onPress={() => this._showAlert("채팅하기")}
-            icon={
-              <FontAwesome
-                name="mobile"
-                size={20}
-                color="#F5DA81"
-                style={{ paddingLeft: 4, marginTop: 6 }}
-              />
-            }
-            iconRight
-            title="채팅하기"
-            buttonStyle={{ backgroundColor: "#FFF" }}
-            titleStyle={{ color: "#F5DA81" }}
-            buttonStyle={{
-              backgroundColor: "transparent",
-              borderWidth: 1,
-              borderColor: "#F5DA81",
-              borderRadius: 10
-            }}
-          />
-        </BtnGroup>
-      </Container>
-    </ContainerScrollView>
+        <MultiSlider
+          values={[
+            this.state.nonCollidingMultiSliderValue[0],
+            this.state.nonCollidingMultiSliderValue[1]
+          ]}
+          sliderLength={280}
+          onValuesChange={this.nonCollidingMultiSliderValuesChange}
+          min={0}
+          max={100}
+          step={1}
+          allowOverlap={false}
+          snapped
+          minMarkerOverlapDistance={40}
+          customMarker={CustomMarker}
+        />
+        <Text style={styles.text}>Native RCT Slider</Text>
+        <Slider style={{ width: 280 }} />
+        <Text style={styles.text}>Custom Marker</Text>
+        <MultiSlider
+          selectedStyle={{
+            backgroundColor: "gold"
+          }}
+          unselectedStyle={{
+            backgroundColor: "silver"
+          }}
+          values={[5]}
+          containerStyle={{
+            height: 40
+          }}
+          trackStyle={{
+            height: 10,
+            backgroundColor: "red"
+          }}
+          touchDimensions={{
+            height: 40,
+            width: 40,
+            borderRadius: 20,
+            slipDisplacement: 40
+          }}
+          customMarker={CustomMarker}
+          sliderLength={280}
+        />
+      </View>
+    </View>
   );
 }
 
-const styles = {
+var styles = StyleSheet.create({
   container: {
-    flex: 1
-  },
-
-  wrapper: {},
-
-  slide: {
     flex: 1,
+    flexDirection: "column",
     justifyContent: "center",
-    backgroundColor: "transparent"
+    alignItems: "center"
   },
-
+  sliders: {
+    margin: 20,
+    width: 280
+  },
   text: {
-    color: "#fff",
-    fontSize: 30,
-    fontWeight: "bold"
+    alignSelf: "center",
+    paddingVertical: 20
   },
-
-  image: {
-    width,
-    flex: 1
+  title: {
+    fontSize: 30
+  },
+  sliderOne: {
+    flexDirection: "row",
+    justifyContent: "space-around"
   }
-};
+});
 
 FilterScreen.navigationOptions = {
   title: "프로필 필터"
