@@ -9,15 +9,37 @@ import {
   View,
   FlatList
 } from "react-native";
-
+import { withNavigation } from "react-navigation";
 import { List, ListItem, Card } from "react-native-elements";
 import { randomUsers } from "./utils";
 import styled from "styled-components";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
 
 // 여자 사진
-const testImg =
-  "https://d26oc3sg82pgk3.cloudfront.net/files/media/uploads/casting_call/b3bc4266-10f3-45b2-8c38-ad7a78df0528.jpg";
+const testImg = [
+  "https://d26oc3sg82pgk3.cloudfront.net/files/media/uploads/casting_call/b3bc4266-10f3-45b2-8c38-ad7a78df0528.jpg",
+  "https://d26oc3sg82pgk3.cloudfront.net/files/media/uploads/casting_call/b3bc4266-10f3-45b2-8c38-ad7a78df0528.jpg",
+  "https://d26oc3sg82pgk3.cloudfront.net/files/media/uploads/casting_call/b3bc4266-10f3-45b2-8c38-ad7a78df0528.jpg"
+];
+
+const arrImg = [
+  require("../assets/images/model/img_1.jpg"),
+  require("../assets/images/model/img_2.jpg"),
+  require("../assets/images/model/img_3.jpg"),
+  require("../assets/images/model/img_4.jpg"),
+  require("../assets/images/model/img_5.jpg"),
+  require("../assets/images/model/img_6.jpg"),
+  require("../assets/images/model/img_7.jpg"),
+  require("../assets/images/model/img_8.jpg"),
+  require("../assets/images/model/img_9.jpg"),
+  require("../assets/images/model/img_10.jpg"),
+  require("../assets/images/model/img_11.jpg"),
+  require("../assets/images/model/img_12.jpg"),
+  require("../assets/images/model/img_13.jpg"),
+  require("../assets/images/model/img_14.jpg"),
+  require("../assets/images/model/img_15.jpg"),
+  require("../assets/images/model/img_16.jpg")
+];
 
 const InputBox = styled.View`
   height: 48px;
@@ -95,7 +117,14 @@ const PInfoRightBox = styled.View`
   width: 40%;
 `;
 
-export default function HomeScreen() {
+function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min)) + min; //최댓값은 제외, 최솟값은 포함
+}
+
+// export function HomeScreen() {
+const HomeScreen = ({ navigation }) => {
   state = {
     refreshing: false,
     data: randomUsers(20)
@@ -103,12 +132,31 @@ export default function HomeScreen() {
 
   keyExtractor = (item, index) => index.toString();
 
-  renderItem = ({ item }) => (
-    <ContainerCard>
-      <ProfileBox>
-        <ProfileImg source={{ uri: item.avatar }} />
-        {/* <ProfileImg source={{ uri: testImg }} /> */}
-      </ProfileBox>
+  _moveDetail = () => {
+    navigation.navigate("Detail");
+  };
+
+  renderItem = ({ item, index, separators }) => (
+    <ContainerCard
+      onPress={() => {
+        this._moveDetail();
+      }}
+    >
+      {item.idx == 0 ? (
+        <ProfileBox>
+          <ProfileImg resizeMethod="resize" source={{ uri: testImg[0] }} />
+        </ProfileBox>
+      ) : (
+        <ProfileBox>
+          <ProfileImg
+            resizeMethod="resize"
+            source={arrImg[getRandomInt(0, 15)]}
+          />
+          {/* <ProfileImg source={{ uri: testImg[getRandomInt(0, 3)] }} /> */}
+          {/* <ProfileImg source={{ uri: testImg }} /> */}
+        </ProfileBox>
+      )}
+
       <ProfileInfoBox>
         <PInfoLeftBox>
           <PInfoName>{item.name}</PInfoName>
@@ -166,12 +214,15 @@ export default function HomeScreen() {
       <FlatList
         style={{ marginTop: 20 }}
         keyExtractor={this.keyExtractor}
-        data={randomUsers(20)}
+        // data={randomUsers(20)}
+        data={this.state.data}
         renderItem={this.renderItem}
       />
     </ScrollView>
   );
-}
+};
+
+export default HomeScreen;
 
 HomeScreen.navigationOptions = {
   // header: null

@@ -12,8 +12,8 @@ import { Input, Button, Icon } from "react-native-elements";
 const SCREEN_WIDTH = Dimensions.get("window").width;
 const SCREEN_HEIGHT = Dimensions.get("window").height;
 
-const BG_IMAGE = require("../assets/images/login/bg_screen3.jpg");
-const LOGIN_IMG = require("../assets/images/login_img.png");
+const BG_IMAGE = require("../assets/images/login/bg_3.jpg");
+const LOGIN_IMG = require("../assets/images/icon_new_4.png");
 
 export default class LoginScreen1 extends Component {
   constructor(props) {

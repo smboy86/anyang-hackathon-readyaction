@@ -1,15 +1,15 @@
 {
   "expo": {
-    "name": "readyaction",
+    "name": "레디액션",
     "slug": "readyaction",
     "privacy": "public",
     "sdkVersion": "35.0.0",
     "platforms": ["ios", "android", "web"],
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon_new.png",
+    "icon": "./assets/images/icon_app_1.png",
     "splash": {
-      "image": "./assets/images/splash_new.png",
+      "image": "./assets/images/splash_new_3.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -23,7 +23,7 @@
     "android": {
       "package": "com.readyaction.app",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/icon_new.png"
+        "foregroundImage": "./assets/images/icon_new_4.png"
       }
     }
   }
