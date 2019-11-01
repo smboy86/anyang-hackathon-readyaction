@@ -8,6 +8,8 @@ import {
 import TabBarIcon from "../components/TabBarIcon";
 import HomeScreen from "../screens/HomeScreen";
 import DetailScreen from "../screens/DetailScreen";
+import FilterScreen from "../screens/FilterScreen";
+
 import LinksScreen from "../screens/LinksScreen";
 import SettingsScreen from "../screens/SettingsScreen";
 
@@ -19,7 +21,8 @@ const config = Platform.select({
 const HomeStack = createStackNavigator(
   {
     Home: HomeScreen,
-    Detail: DetailScreen
+    Detail: DetailScreen,
+    Filter: FilterScreen
   },
   config
 );

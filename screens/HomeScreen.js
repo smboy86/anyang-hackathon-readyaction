@@ -17,7 +17,7 @@ import { AntDesign, Ionicons } from "@expo/vector-icons";
 
 // 여자 사진
 const testImg = [
-  "https://d26oc3sg82pgk3.cloudfront.net/files/media/uploads/casting_call/b3bc4266-10f3-45b2-8c38-ad7a78df0528.jpg",
+  require("../assets/images/model/img_test.jpg"),
   "https://d26oc3sg82pgk3.cloudfront.net/files/media/uploads/casting_call/b3bc4266-10f3-45b2-8c38-ad7a78df0528.jpg",
   "https://d26oc3sg82pgk3.cloudfront.net/files/media/uploads/casting_call/b3bc4266-10f3-45b2-8c38-ad7a78df0528.jpg"
 ];
@@ -60,7 +60,7 @@ const SearchTextInput = styled.TextInput`
 const SearchIconBox = styled.TouchableOpacity`
   position: absolute;
   top: 10px;
-  right: 10%;
+  right: 6%;
 `;
 
 const ContainerCard = styled.TouchableOpacity`
@@ -68,17 +68,20 @@ const ContainerCard = styled.TouchableOpacity`
   padding: 10px 20px 10px 20px;
   background-color: #fff;
   border-radius: 16px;
-  /* margin-top: 10px; */
+  margin-bottom: 10px;
 `;
 
 const ProfileBox = styled.View`
   position: relative;
+  margin-bottom: 4px;
 `;
 
 const ProfileImg = styled.Image`
+  flex: 1;
   border-radius: 10px;
   width: 100%;
   height: 230px;
+  justify-content: flex-start;
 `;
 
 const ProfileInfoBox = styled.View`
@@ -107,6 +110,7 @@ const PInfoLeftDetail = styled.TouchableOpacity`
   border: 1px solid #e2e2e2;
   border-radius: 20px;
   margin-right: 6px;
+  margin-bottom: 4px;
 `;
 
 const PInfoLeftText = styled.Text`
@@ -136,6 +140,10 @@ const HomeScreen = ({ navigation }) => {
     navigation.navigate("Detail");
   };
 
+  _moveFilter = () => {
+    navigation.navigate("Filter");
+  };
+
   renderItem = ({ item, index, separators }) => (
     <ContainerCard
       onPress={() => {
@@ -144,7 +152,11 @@ const HomeScreen = ({ navigation }) => {
     >
       {item.idx == 0 ? (
         <ProfileBox>
-          <ProfileImg resizeMethod="resize" source={{ uri: testImg[0] }} />
+          <ProfileImg
+            resizeMode="cover"
+            resizeMethod="resize"
+            source={testImg[0]}
+          />
         </ProfileBox>
       ) : (
         <ProfileBox>
@@ -207,14 +219,14 @@ const HomeScreen = ({ navigation }) => {
           // onChangeText={text => onChangeSearchText(text)}
           // value={}
         ></SearchTextInput>
-        <SearchIconBox onPress={() => {}}>
+        <SearchIconBox onPress={() => this._moveFilter}>
           <Ionicons name="md-search" size={26} color="black" />
         </SearchIconBox>
       </InputBox>
       <FlatList
         style={{ marginTop: 20 }}
+        initialNumToRender={20}
         keyExtractor={this.keyExtractor}
-        // data={randomUsers(20)}
         data={this.state.data}
         renderItem={this.renderItem}
       />

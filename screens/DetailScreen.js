@@ -228,15 +228,15 @@ export default function DetailScreen() {
             <Text numberOfLines={1} style={{ color: "#F78181" }}>
               하얀 거탑
             </Text>{" "}
-            -권순일 역 [TV 드라마] 2007.01 ~ 2007.03
+            - 권순일 역 [TV 드라마] 2007.01 ~ 2007.03
           </Text>
         </View>
         <View>
           <Text>
             <Text numberOfLines={1} style={{ color: "#F78181" }}>
-              하얀 거탑
+              이 산
             </Text>{" "}
-            -권순일 역 [TV 드라마] 2007.01 ~ 2007.03
+            - 정조 내시 역 [TV 드라마] 2007.09 ~ 2008.06
           </Text>
         </View>
         <BtnGroup>
