@@ -42,8 +42,6 @@ async function loadResourcesAsync() {
       "space-mono": require("./assets/fonts/SpaceMono-Regular.ttf")
     })
   ]);
-
-  await setTimeout(() => console.log("loading delay"), 2000);
 }
 
 function handleLoadingError(error) {
@@ -53,7 +51,7 @@ function handleLoadingError(error) {
 }
 
 function handleFinishLoading(setLoadingComplete) {
-  setLoadingComplete(true);
+  setTimeout(() => setLoadingComplete(true), 1500);
 }
 
 const styles = StyleSheet.create({

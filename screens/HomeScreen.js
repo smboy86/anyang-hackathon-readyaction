@@ -14,32 +14,7 @@ import { List, ListItem, Card } from "react-native-elements";
 import { randomUsers } from "./utils";
 import styled from "styled-components";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
-
-// 여자 사진
-const testImg = [
-  require("../assets/images/model/img_test.jpg"),
-  "https://d26oc3sg82pgk3.cloudfront.net/files/media/uploads/casting_call/b3bc4266-10f3-45b2-8c38-ad7a78df0528.jpg",
-  "https://d26oc3sg82pgk3.cloudfront.net/files/media/uploads/casting_call/b3bc4266-10f3-45b2-8c38-ad7a78df0528.jpg"
-];
-
-const arrImg = [
-  require("../assets/images/model/img_1.jpg"),
-  require("../assets/images/model/img_2.jpg"),
-  require("../assets/images/model/img_3.jpg"),
-  require("../assets/images/model/img_4.jpg"),
-  require("../assets/images/model/img_5.jpg"),
-  require("../assets/images/model/img_6.jpg"),
-  require("../assets/images/model/img_7.jpg"),
-  require("../assets/images/model/img_8.jpg"),
-  require("../assets/images/model/img_9.jpg"),
-  require("../assets/images/model/img_10.jpg"),
-  require("../assets/images/model/img_11.jpg"),
-  require("../assets/images/model/img_12.jpg"),
-  require("../assets/images/model/img_13.jpg"),
-  require("../assets/images/model/img_14.jpg"),
-  require("../assets/images/model/img_15.jpg"),
-  require("../assets/images/model/img_16.jpg")
-];
+import { testImg, arrImg, arrImgUrl } from "../constants/mockImages";
 
 const InputBox = styled.View`
   height: 48px;
@@ -136,8 +111,8 @@ const HomeScreen = ({ navigation }) => {
 
   keyExtractor = (item, index) => index.toString();
 
-  _moveDetail = () => {
-    navigation.navigate("Detail");
+  _moveDetail = img => {
+    navigation.navigate("Detail", { profileImage: "sssss" });
   };
 
   _moveFilter = () => {
@@ -147,7 +122,10 @@ const HomeScreen = ({ navigation }) => {
   renderItem = ({ item, index, separators }) => (
     <ContainerCard
       onPress={() => {
-        this._moveDetail();
+        navigation.navigate("Detail", {
+          profileImage: arrImg[index],
+          idxImage: index
+        });
       }}
     >
       {item.idx == 0 ? (
@@ -160,10 +138,7 @@ const HomeScreen = ({ navigation }) => {
         </ProfileBox>
       ) : (
         <ProfileBox>
-          <ProfileImg
-            resizeMethod="resize"
-            source={arrImg[getRandomInt(0, 15)]}
-          />
+          <ProfileImg resizeMethod="resize" source={arrImg[index]} />
           {/* <ProfileImg source={{ uri: testImg[getRandomInt(0, 3)] }} /> */}
           {/* <ProfileImg source={{ uri: testImg }} /> */}
         </ProfileBox>

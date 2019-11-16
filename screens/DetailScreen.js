@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Image,
   Platform,
@@ -17,7 +17,7 @@ import styled from "styled-components";
 
 import Swiper from "react-native-swiper";
 import { Video } from "expo-av";
-
+import { arrImgUrl } from "../constants/mockImages";
 import { Slider, ButtonGroup, Button } from "react-native-elements";
 
 const { width } = Dimensions.get("window");
@@ -97,10 +97,15 @@ const BtnGroup = styled.View`
   padding-bottom: 60px;
 `;
 
-export default function DetailScreen() {
+export default function DetailScreen(props) {
   state = {
     refreshing: false
   };
+
+  useEffect(() => {
+    // console.log("DetailScreen", props);
+    // console.log("DetailScreen", props.navigation.state.params.profileImage);
+  }, []);
 
   _showAlert = text => {
     Alert.alert(
@@ -117,41 +122,38 @@ export default function DetailScreen() {
 
   return (
     <ContainerScrollView>
-      <Swiper style={styles.wrapper} height={400} horizontal={false}>
-        {/* <SwiperItem>
-          <Video
-            source={{
-              uri: "http://docker.devpoi.com/test.mp4"
-            }}
-            usePoster={true}
-            rate={1.0}
-            volume={1.0}
-            isMuted={false}
-            resizeMode="contain"
-            useNativeControls
-            isLooping
-            style={{ width: width, height: 400 }}
-          />
-        </SwiperItem> */}
-        <SwiperItem>
-          <Image
-            style={{ width: width, height: 400 }}
-            source={{ uri: testImg[1] }}
-          />
-        </SwiperItem>
-        <SwiperItem>
-          <Image
-            style={{ width: width, height: 400 }}
-            source={{ uri: testImg[2] }}
-          />
-        </SwiperItem>
-        <SwiperItem>
-          <Image
-            style={{ width: width, height: 400 }}
-            source={{ uri: testImg[3] }}
-          />
-        </SwiperItem>
-      </Swiper>
+      {props.navigation.state.params.idxImage == 0 ? (
+        <Swiper style={styles.wrapper} height={400} horizontal={false}>
+          <SwiperItem>
+            <Image
+              style={{ width: width, height: 400 }}
+              source={props.navigation.state.params.profileImage}
+            />
+          </SwiperItem>
+          <SwiperItem>
+            <Image
+              style={{ width: width, height: 400 }}
+              source={{ uri: testImg[2] }}
+            />
+          </SwiperItem>
+          <SwiperItem>
+            <Image
+              style={{ width: width, height: 400 }}
+              source={{ uri: testImg[3] }}
+            />
+          </SwiperItem>
+        </Swiper>
+      ) : (
+        <Swiper style={styles.wrapper} height={400} horizontal={false}>
+          <SwiperItem>
+            <Image
+              style={{ width: width, height: 400 }}
+              source={props.navigation.state.params.profileImage}
+            />
+          </SwiperItem>
+        </Swiper>
+      )}
+
       <Container>
         <SubTitle>모습</SubTitle>
         <SubInfoBox>

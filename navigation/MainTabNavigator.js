@@ -10,7 +10,7 @@ import HomeScreen from "../screens/HomeScreen";
 import DetailScreen from "../screens/DetailScreen";
 import FilterScreen from "../screens/FilterScreen";
 
-import LinksScreen from "../screens/LinksScreen";
+import SeekWorkScreen from "../screens/SeekWorkScreen";
 import SettingsScreen from "../screens/SettingsScreen";
 
 const config = Platform.select({
@@ -39,14 +39,14 @@ HomeStack.navigationOptions = {
 
 HomeStack.path = "";
 
-const LinksStack = createStackNavigator(
+const SeekWorkStack = createStackNavigator(
   {
-    Links: LinksScreen
+    SeekWrok: SeekWorkScreen
   },
   config
 );
 
-LinksStack.navigationOptions = {
+SeekWorkStack.navigationOptions = {
   tabBarLabel: "구직",
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
@@ -56,7 +56,7 @@ LinksStack.navigationOptions = {
   )
 };
 
-LinksStack.path = "";
+SeekWorkStack.path = "";
 
 const SettingsStack = createStackNavigator(
   {
@@ -79,7 +79,7 @@ SettingsStack.path = "";
 
 const tabNavigator = createBottomTabNavigator({
   HomeStack,
-  LinksStack,
+  SeekWorkStack,
   SettingsStack
 });
 
