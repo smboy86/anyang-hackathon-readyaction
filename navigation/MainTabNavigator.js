@@ -12,6 +12,7 @@ import FilterScreen from "../screens/FilterScreen";
 
 import SeekWorkScreen from "../screens/SeekWorkScreen";
 import SettingsScreen from "../screens/SettingsScreen";
+import DetailChatScreen from "../screens/DetailChatScreen";
 
 const config = Platform.select({
   web: { headerMode: "screen" },
@@ -21,8 +22,9 @@ const config = Platform.select({
 const HomeStack = createStackNavigator(
   {
     Home: HomeScreen,
+    Filter: FilterScreen,
     Detail: DetailScreen,
-    Filter: FilterScreen
+    DetailChat: DetailChatScreen
   },
   config
 );

@@ -102,22 +102,8 @@ export default function DetailScreen(props) {
     refreshing: false
   };
 
-  useEffect(() => {
-    // console.log("DetailScreen", props);
-    // console.log("DetailScreen", props.navigation.state.params.profileImage);
-  }, []);
-
   _showAlert = text => {
-    Alert.alert(
-      "알림",
-      text
-      // [
-      //   {text: 'Ask me later', onPress: () => console.log('Ask me later pressed')},
-      //   {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-      //   {text: 'OK', onPress: () => console.log('OK Pressed')},
-      // ],
-      // { cancelable: false }
-    );
+    Alert.alert("알림", text);
   };
 
   return (
@@ -254,6 +240,7 @@ export default function DetailScreen(props) {
             iconRight
             title="출연 제의하기"
             onPress={() => this._showAlert("출연 제의하기")}
+            // onPress={() => props.navigation.push("DetailChat")}
             buttonStyle={{ backgroundColor: "#FFF" }}
             titleStyle={{ color: "#BCA9F5" }}
             buttonStyle={{
